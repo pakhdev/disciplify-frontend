@@ -1,0 +1,66 @@
+body {
+    background: #EDEFF1;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.authorization-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.authorization-form {
+    width: 360px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.authorization-form__input {
+    font-size: 14px;
+    height: 40px;
+    padding: 2px 15px 0;
+}
+
+.authorization-form__error {
+    font-size: 14px;
+    line-height: 15px;
+    color: #E68060;
+    padding-left: 10px;
+}
+
+.authorization-form__button {
+    border: none;
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 35px;
+    height: 35px;
+}
+
+.authorization-logo__name {
+    font-size: 55px;
+    line-height: 55px;
+}
+
+.authorization-logo__slogan {
+    font-size: 15px;
+}
+
+.authorization-cta {
+    text-align: center;
+    font-size: 14px;
+    color: #0A758B;
+    & a {
+        text-decoration: underline;
+    }
+    & a:hover {
+        cursor: pointer;
+    }
+}
+

@@ -1,6 +1,6 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { DynamicButtonTextDirective } from '../../../shared/directives/dynamic-button-text.directive';
@@ -15,6 +15,7 @@ import { ErrorMessageDirective } from '../../../shared/directives/error-message.
         FormsModule,
         ReactiveFormsModule,
         DynamicButtonTextDirective,
+        RouterLink,
     ],
 })
 export class LoginPageComponent {

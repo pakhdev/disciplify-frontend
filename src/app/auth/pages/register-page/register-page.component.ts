@@ -1,6 +1,6 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { isFieldOneEqualFieldTwo } from '../../../shared/validators/validators';
@@ -17,6 +17,7 @@ import { DynamicButtonTextDirective } from '../../../shared/directives/dynamic-b
         FormsModule,
         ErrorMessageDirective,
         DynamicButtonTextDirective,
+        RouterLink,
     ],
 })
 export class RegisterPageComponent {

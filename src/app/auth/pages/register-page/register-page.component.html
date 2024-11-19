@@ -1,6 +1,45 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()">
-    <input type="text" class="input-text authorization-form__input" placeholder="Login">
-    <input type="password" class="input-text authorization-form__input" placeholder="Password">
-    <input type="password" class="input-text authorization-form__input" placeholder="Repeat password">
-    <div class="button authorization-form__button">Register</div>
+    <div class="authorization-form">
+        <input
+            type="text"
+            placeholder="Login"
+            formControlName="name"
+            class="input-text authorization-form__input"
+        >
+        @if (hasError('name')) {
+            <div errorMessage class="authorization-form__error" [errors]="getError('name')"></div>
+        }
+
+        <input
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            class="input-text authorization-form__input"
+        >
+        @if (hasError('password')) {
+            <div errorMessage class="authorization-form__error" [errors]="getError('password')"></div>
+        }
+
+        <input
+            type="password"
+            placeholder="Repeat password"
+            formControlName="repeatPassword"
+            class="input-text authorization-form__input"
+        >
+        @if (hasError('repeatPassword')) {
+            <div errorMessage class="authorization-form__error" [errors]="getError('repeatPassword')"></div>
+        }
+        <button
+            dynamicButtonText
+            initialMessage="Register"
+            loadingMessage="Registering..."
+            successMessage="Registered"
+            [errorState]="backendError()"
+            [isLoading]="isLoading()"
+            class="button authorization-form__button"
+        >Register</button>
+    </div>
 </form>
+<div class="authorization-cta">
+    Already registered? <a routerLink="/auth/login">Sign in</a>
+</div>

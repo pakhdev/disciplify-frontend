@@ -23,7 +23,7 @@ export class NameValidator implements AsyncValidator {
                 const params = { name };
                 return this.http.get<{
                     isRegistered: boolean
-                }>(`${ environments.backendUrl }/auth/check-name`, { params }).pipe(
+                }>(`${ environments.backendUrl }/authorization/check-name`, { params }).pipe(
                     map((response) => {
                         if (response.isRegistered) {
                             return { nameTaken: true };

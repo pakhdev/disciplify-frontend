@@ -21,8 +21,8 @@ export class AuthService {
         this.checkAuthStatus().subscribe();
     }
 
-    public register(email: string, password: string): Observable<boolean> {
-        const body = { email, password };
+    public register(name: string, password: string): Observable<boolean> {
+        const body = { name, password };
         return this.http.post('/authorization/register', body)
             .pipe(
                 map(() => this.setAuthentication()),
@@ -30,8 +30,8 @@ export class AuthService {
             );
     }
 
-    public login(email: string, password: string): Observable<boolean> {
-        const body = { email, password };
+    public login(name: string, password: string): Observable<boolean> {
+        const body = { name, password };
         return this.http.post('/authorization/login', body)
             .pipe(
                 map(() => this.setAuthentication()),

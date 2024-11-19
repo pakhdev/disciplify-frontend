@@ -1,5 +1,40 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <input type="text" class="input-text authorization-form__input" placeholder="Login">
-    <input type="password" class="input-text authorization-form__input" placeholder="Password">
-    <div class="button authorization-form__button">Enter</div>
+    <div class="authorization-form">
+        <input
+            type="text"
+            placeholder="Login"
+            formControlName="name"
+            class="input-text authorization-form__input"
+        >
+        @if (hasError('name')) {
+            <div errorMessage class="authorization-form__error" [errors]="getError('name')"></div>
+        }
+
+        <input
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            class="input-text authorization-form__input"
+        >
+        @if (hasError('password')) {
+            <div errorMessage class="authorization-form__error" [errors]="getError('password')"></div>
+        }
+
+        <button
+            dynamicButtonText
+            initialMessage="Enter"
+            loadingMessage="Entering..."
+            successMessage="Authenticated"
+            [errorState]="backendError()"
+            [isLoading]="isLoading()"
+            class="button authorization-form__button"
+        >Enter</button>
+
+        @if (backendError()) {
+            <div errorMessage class="authorization-form__error" [errors]="backendError()"></div>
+        }
+    </div>
 </form>
+<div class="authorization-cta">
+    Don't have an account? <a routerLink="/auth/register">Sign up</a>
+</div>

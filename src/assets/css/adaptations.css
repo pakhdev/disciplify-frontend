@@ -1,0 +1,175 @@
+@media (max-width: 1300px) {
+    .dashboard {
+        padding: max(20px, calc(50vw - 610px)) max(25px, calc(50vw - 580px));
+    }
+    .main-part {
+        margin-left: max(25px, calc(50vw - 590px));
+    }
+}
+
+@media (max-width: 1175px) {
+    .input-option-selector__selected,
+    .input-option-selector__selected--multi,
+    .input-option-selector__option,
+    .input-option-selector__option--multi {
+        padding: 0 max(12px, calc(7vw - 67px));
+    }
+    .modal {
+        .input-option-selector__selected,
+        .input-option-selector__selected--multi,
+        .input-option-selector__option,
+        .input-option-selector__option--multi {
+            padding: 1px 15px 0;
+        }
+    }
+}
+
+@media (max-width: 1125px) {
+    .main-part {
+        margin-left: 0;
+    }
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+    .category-creation {
+        display: flex;
+        justify-content: right;
+    }
+    .left-part {
+        max-width: 100%;
+    }
+    .dashboard {
+        flex-flow: column-reverse;
+    }
+    .charts {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 950px) {
+    .charts,
+    .content-two-columns {
+        display: flex;
+        flex-direction: column;
+    }
+    .chart__content {
+        text-align: center;
+    }
+    .main-part {
+        min-width: auto;
+    }
+    .category-creation {
+        min-width: auto;
+    }
+    .chart__header, .chart__options {
+        text-align: center;
+    }
+}
+
+@media (max-width: 590px) {
+    .todays-progress {
+        gap: 0;
+    }
+    .todays-progress__header {
+        margin-bottom: -10px;
+    }
+    .content-two-columns {
+        gap: max(10px, calc(15vw - 58px));
+    }
+    .todays-progress {
+        margin-top: max(10px, calc(20vw - 78px));
+    }
+    .logo__name {
+        font-size: calc(15vw - 13px);
+        line-height: calc(15vw - 13px);
+    }
+    .logo__slogan {
+        font-size: calc(6vw - 5px);
+    }
+    .todays-progress {
+        flex-direction: column;
+    }
+    .main-toolbar {
+        flex-direction: column-reverse;
+    }
+    .tasks-visualisation-selector {
+        text-align: center;
+    }
+    .category-creation {
+        margin-bottom: 10px;
+    }
+    .task-editor__create-button {
+        flex: 1;
+    }
+    .chart__content {
+        display: flex;
+    }
+    .chart__content canvas {
+        width: 100%;
+        object-fit: cover;
+        object-position: top left;
+    }
+    .main-toolbar {
+        margin-top: calc(3vw - 3px);
+        padding: 0;
+    }
+    .content-two-columns {
+        margin-top: 5px;
+    }
+    .tasks-section__title {
+        font-size: max(20px, calc(20vw - 83px));
+        line-height: max(40px, calc(20vw - 63px));
+    }
+    .modal__content {
+        padding: 20px max(10px, calc(13.5vw - 60px)) 10px;
+    }
+}
+
+@media (max-width: 525px) {
+    .modal {
+        .input-option-selector__selected,
+        .input-option-selector__selected--multi,
+        .input-option-selector__option,
+        .input-option-selector__option--multi {
+            padding: 0 max(12px, calc(7vw - 22px));
+        }
+    }
+}
+
+@media (max-width: 485px) {
+    .task-editor__form {
+        margin-top: 10px;
+    }
+    .task-editor__two-columns {
+        gap: 3px;
+    }
+    .task-editor__two-columns {
+        display: flex;
+        flex-direction: column;
+    }
+    .task-editor__input-label {
+        text-align: center;
+        line-height: 10px;
+    }
+    .task-editor__input-container {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 390px) {
+    /*.tasks-section__title {*/
+    /*    font-size: calc(15vw - 24px);*/
+    /*    line-height: calc(15vw - 3px);*/
+    /*}*/
+    .dashboard {
+        padding: 5.6vw max(10px, calc(20vw - 53px));
+    }
+}
