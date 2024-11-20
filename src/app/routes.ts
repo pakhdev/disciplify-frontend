@@ -9,11 +9,11 @@ export const routes: Routes = [
         canActivate: [isPublicGuard],
         loadChildren: () => import('./auth/routes').then(m => m.authRoutes),
     },
-    // {
-    //     path: 'dashboard',
-    //     canActivate: [isPrivateGuard],
-    //     loadChildren: () => import('./dashboard/routes').then(m => m.dashboardRoutes),
-    // },
+    {
+        path: 'dashboard',
+        canActivate: [isPrivateGuard],
+        loadChildren: () => import('./dashboard/routes').then(m => m.dashboardRoutes),
+    },
     {
         path: '**',
         redirectTo: 'auth',

@@ -39,11 +39,12 @@ html, body {
     font-family: 'Khula', sans-serif;
     min-height: 100vh;
 }
-body {
+.main-container {
     background: linear-gradient(45deg, var(--cloud-gray) 50%, white 50%, white 51.5%, var(--aqua) 51.5%) fixed;
     display: flex;
     justify-content: center;
     position: relative;
+    min-height: 100vh;
 }
 .button {
     border-radius: 5px;

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,9 +9,13 @@ import { CommonModule } from '@angular/common';
     imports: [
         CommonModule,
         RouterOutlet,
-        RouterLink,
-        RouterLinkActive,
     ],
+    styles: [`
+        .main-container {
+            background: #EDEFF1;
+        }
+    `],
+    encapsulation: ViewEncapsulation.None,
 })
 export class AuthLayoutComponent {
 
