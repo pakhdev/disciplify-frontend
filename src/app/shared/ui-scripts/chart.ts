@@ -31,31 +31,51 @@
 //     container: monthlyChart
 // })
 
-class Chart {
-    lineColor = 'rgba(168,229,242, 1)';
-    pointColor = 'rgba(168,229,242, 1)';
-    gridColor = '#F5F8FA';
-    padding = 20;
-    pointRadius = 5;
+interface ChartOptions {
+    width: number;
+    height: number;
+    labels: string[];
+    dataNumbers: number[];
+    container: HTMLElement;
+}
 
-    constructor({ width, height, labels, dataNumbers, container }) {
+class Chart {
+    private lineColor: string = 'rgba(168,229,242, 1)';
+    private pointColor: string = 'rgba(168,229,242, 1)';
+    private gridColor: string = '#F5F8FA';
+    private padding: number = 20;
+    private pointRadius: number = 5;
+    private readonly width: number;
+    private readonly height: number;
+    private observer: MutationObserver;
+
+    constructor({ width, height, labels, dataNumbers, container }: ChartOptions) {
+        this.width = width;
+        this.height = height;
+
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
-        this.width = width;
-        this.height = height;
+        canvas.ariaHidden = 'true';
         container.appendChild(canvas);
 
         const ctx = canvas.getContext('2d');
-        const maxDataValue = Math.max(...dataNumbers);
+        if (!ctx) throw new Error('Canvas context is not supported');
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.drawGrid(ctx);
-        this.drawGraph(ctx, dataNumbers, maxDataValue);
-        this.onPointHover(canvas, dataNumbers, labels, maxDataValue);
+        this.drawChart(ctx, dataNumbers, labels);
+        this.observer = this.observeAttributes(container, canvas);
     }
 
-    drawGrid(ctx) {
+    private drawChart(ctx: CanvasRenderingContext2D, dataNumbers: number[], labels: string[]): void {
+        const maxDataValue = Math.max(...dataNumbers);
+
+        ctx.clearRect(0, 0, this.width, this.height);
+        this.drawGrid(ctx);
+        this.drawGraph(ctx, dataNumbers, maxDataValue);
+        this.onPointHover(ctx.canvas, dataNumbers, labels, maxDataValue);
+    }
+
+    private drawGrid(ctx: CanvasRenderingContext2D): void {
         ctx.strokeStyle = this.gridColor;
         ctx.lineWidth = 1;
         const steps = 5;
@@ -70,7 +90,7 @@ class Chart {
         }
     }
 
-    drawGraph(ctx, dataNumbers, maxDataValue) {
+    private drawGraph(ctx: CanvasRenderingContext2D, dataNumbers: number[], maxDataValue: number): void {
         const width = this.width - this.padding * 2;
         const height = this.height - this.padding * 2;
 
@@ -91,7 +111,6 @@ class Chart {
 
         ctx.stroke();
 
-        // Points
         for (let i = 0; i < dataNumbers.length; i++) {
             const x = this.padding + (width / (dataNumbers.length - 1)) * i;
             const y = this.height - this.padding - (dataNumbers[i] / maxDataValue) * height;
@@ -103,13 +122,46 @@ class Chart {
         }
     }
 
-    onPointHover(canvas, dataNumbers, labels, maxDataValue) {
-        const tooltip = document.createElement('div');
+    private observeAttributes(container: HTMLElement, canvas: HTMLCanvasElement): MutationObserver {
+        const observer = new MutationObserver((mutationsList) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'attributes') {
+                    const labelsString = container.getAttribute('chart-labels') || '';
+                    const dataNumbersString = container.getAttribute('chart-data-numbers') || '';
+
+                    const labelsArray = labelsString.split(',').map(label => label.trim().replace(/['"]/g, ''));
+                    const dataNumbersArray = dataNumbersString.split(',').map(number => Number(number.trim()));
+
+                    labelsArray.unshift('Start');
+                    dataNumbersArray.unshift(0);
+
+                    const ctx = canvas.getContext('2d');
+                    if (ctx) {
+                        this.drawChart(ctx, dataNumbersArray, labelsArray);
+                    }
+                }
+            }
+        });
+
+        observer.observe(container, {
+            attributes: true,
+            attributeFilter: ['chart-labels', 'chart-data-numbers'],
+        });
+        return observer;
+    }
+
+    private onPointHover(canvas: HTMLCanvasElement, dataNumbers: number[], labels: string[], maxDataValue: number): void {
+        let tooltip = canvas.parentNode?.querySelector('.chart__tooltip') as HTMLDivElement;
+
+        if (tooltip)
+            tooltip.remove();
+
+        tooltip = document.createElement('div');
         tooltip.className = 'chart__tooltip';
         tooltip.style.position = 'absolute';
         tooltip.style.pointerEvents = 'none';
         tooltip.style.display = 'none';
-        canvas.parentNode.appendChild(tooltip);
+        canvas.parentNode?.appendChild(tooltip);
 
         const width = this.width - this.padding * 2;
         const height = this.height - this.padding * 2;
@@ -118,7 +170,6 @@ class Chart {
             const rect = canvas.getBoundingClientRect();
             const mouseX = event.clientX - rect.left;
             const mouseY = event.clientY - rect.top;
-
             let showTooltip = false;
 
             for (let i = 0; i < dataNumbers.length; i++) {
@@ -126,23 +177,26 @@ class Chart {
                 const y = this.height - this.padding - (dataNumbers[i] / maxDataValue) * height;
 
                 if (Math.abs(mouseX - x) < this.pointRadius && Math.abs(mouseY - y) < this.pointRadius) {
-                    tooltip.style.left = event.pageX + 10 + 'px';
-                    tooltip.style.top = event.pageY + 10 + 'px';
+                    tooltip.style.left = `${ event.pageX + 10 }px`;
+                    tooltip.style.top = `${ event.pageY + 10 }px`;
                     tooltip.style.display = 'block';
-                    tooltip.innerHTML = `Date: ${labels[i]}<br>Result: ${dataNumbers[i]}`;
+                    tooltip.innerHTML = `${ labels[i] ? `Date: ${ labels[i] }<br>` : '' }Result: ${ dataNumbers[i] }`;
                     showTooltip = true;
                     break;
                 }
             }
 
-            if (!showTooltip) {
+            if (!showTooltip)
                 tooltip.style.display = 'none';
-            }
+
         });
     }
+
 }
 
-class ChartManager {
+export class ChartManager {
+    private observer: MutationObserver;
+
     constructor() {
         this.observer = new MutationObserver((mutationsList) => {
             for (const mutation of mutationsList) {
@@ -156,38 +210,33 @@ class ChartManager {
         this.checkAndInitCharts();
     }
 
-    checkAndInitCharts() {
-        const divElements = document.querySelectorAll('div[append-chart="true"][chart-width][chart-height][chart-labels][chart-data-numbers]:not(.initialized)');
-        divElements.forEach(select => {
-            this.initChart(select);
-            select.classList.add('initialized');
+    private checkAndInitCharts(): void {
+        const divElements = document.querySelectorAll<HTMLElement>('div[append-chart="true"][chart-width][chart-height][chart-labels][chart-data-numbers]:not(.initialized)');
+        divElements.forEach(container => {
+            this.initChart(container);
+            container.classList.add('initialized');
         });
     }
 
-    initChart(container) {
+    private initChart(container: HTMLElement): void {
         const width = Number(container.getAttribute('chart-width'));
         const height = Number(container.getAttribute('chart-height'));
-        const labelsString = container.getAttribute('chart-labels');
-        const dataNumbersString = container.getAttribute('chart-data-numbers');
+        const labelsString = container.getAttribute('chart-labels') || '';
+        const dataNumbersString = container.getAttribute('chart-data-numbers') || '';
 
-        const labelsArray = labelsString
-            .split(',')
-            .map(label => label.trim().replace(/['"]/g, ''));
-
-        const dataNumbersArray = dataNumbersString
-            .split(',')
-            .map(number => Number(number.trim()));
+        const labelsArray: string[] = labelsString.split(',').map(label => label.trim().replace(/['"]/g, ''));
+        const dataNumbersArray: number[] = dataNumbersString.split(',').map(number => Number(number.trim()));
 
         new Chart({
             width,
             height,
             labels: labelsArray,
             dataNumbers: dataNumbersArray,
-            container
+            container,
         });
     }
 
-    disconnect() {
+    disconnect(): void {
         this.observer.disconnect();
     }
 }

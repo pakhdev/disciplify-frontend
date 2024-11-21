@@ -31,12 +31,7 @@
               "src/assets/css/adaptations.css",
               "src/assets/css/login.css"
             ],
-            "scripts": [
-              "src/assets/js/chart.js",
-              "src/assets/js/select-popup.js",
-              "src/assets/js/calendar.js",
-              "src/assets/js/select-tabs.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
