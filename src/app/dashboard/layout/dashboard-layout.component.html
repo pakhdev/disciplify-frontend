@@ -102,55 +102,9 @@
             </div>
         </div>
         <div class="charts">
-            <div class="chart">
-                <div class="chart__header">
-                    Daily Average
-                </div>
-                <div class="chart__options">
-                    <a class="chart__active-option">Percentage</a>
-                    <a>Points</a>
-                </div>
-                <div
-                    append-chart="true"
-                    chart-width="400"
-                    chart-height="130"
-                    chart-labels='"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"'
-                    chart-data-numbers='10, 30, 28, 17, 10, 30, 18, 17, 10, 30, 48, 17'
-                    class="chart__content" id="daily-chart"></div>
-            </div>
-            <div class="chart">
-                <div class="chart__header">
-                    Weekly Average
-                </div>
-                <div class="chart__options">
-                    <a class="chart__active-option">Percentage</a>
-                    <a>Points</a>
-                </div>
-                <div
-                    append-chart="true"
-                    chart-width="400"
-                    chart-height="130"
-                    chart-labels='"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"'
-                    chart-data-numbers='10, 30, 28, 17, 10, 30, 18, 17, 10, 30, 48, 17'
-                    class="chart__content" id="weekly-chart"></div>
-            </div>
-            <div class="chart">
-                <div class="chart__header">
-                    Monthly Average
-                </div>
-                <div class="chart__options">
-                    <a class="chart__active-option">Percentage</a>
-                    <a>Points</a>
-                </div>
-                <div
-                    append-chart="true"
-                    chart-width="400"
-                    chart-height="130"
-                    chart-labels='"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"'
-                    chart-data-numbers='10, 30, 28, 17, 10, 30, 18, 17, 10, 30, 48, 17'
-                    class="chart__content" id="monthly-chart">
-                </div>
-            </div>
+            <dashboard-chart chartTitle="Daily Average" period="day"/>
+            <dashboard-chart chartTitle="Weekly Average" period="week"/>
+            <dashboard-chart chartTitle="Monthly Average" period="month"/>
         </div>
     </div>
     <div class="main-part">

@@ -1,0 +1,22 @@
+<div class="chart">
+    <div class="chart__header">
+        {{ chartTitle }}
+    </div>
+    <div class="chart__options">
+        <a
+            [ngClass]="{ 'chart__active-option': mode() === 'percentage' }"
+            (click)="changeMode('percentage')"
+        >Percentage</a>
+        <a
+            [ngClass]="{ 'chart__active-option': mode() === 'points' }"
+            (click)="changeMode('points')"
+        >Points</a>
+    </div>
+    <div
+        append-chart="true"
+        chart-width="400"
+        chart-height="130"
+        attr.chart-labels="{{ labels() }}"
+        attr.chart-data-numbers="{{ data() }}"
+        class="chart__content" id="daily-chart"></div>
+</div>

@@ -353,11 +353,11 @@ html, body {
 }
 
 .charts {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .chart {
     border-bottom: 1px solid var(--light-blue);
-    padding: 10px 0;
+    padding: 25px 0 0;
 }
 .chart__header {
     font-family: 'Orbitron', sans-serif;
