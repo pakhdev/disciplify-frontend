@@ -47,6 +47,7 @@ html, body {
     min-height: 100vh;
 }
 .button {
+    border: none;
     border-radius: 5px;
     text-transform: uppercase;
     color: white;
@@ -59,6 +60,13 @@ html, body {
     padding: 2px 10px 0;
     &:hover {
         filter: brightness(1.05);
+    }
+}
+.button--disabled {
+    background-color: var(--soft-gray);
+    cursor: default;
+    &:hover {
+        filter: brightness(1);
     }
 }
 .input-text, .input-number {
@@ -495,6 +503,9 @@ html, body {
     grid-template-columns: 2fr 1fr;
     gap: 10px;
     min-width: 350px;
+    & form {
+        display: contents;
+    }
 }
 
 .content-two-columns {

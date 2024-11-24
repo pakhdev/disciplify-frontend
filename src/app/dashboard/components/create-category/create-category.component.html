@@ -1,0 +1,18 @@
+<form #newCategoryForm="ngForm" (ngSubmit)="createCategory(newCategoryForm)">
+    <input
+        type="text"
+        ngModel
+        name="name"
+        #name="ngModel"
+        minlength="2"
+        required
+        class="input-text desktop"
+        autocomplete="off"
+        placeholder="Category name">
+    <button
+        [ngClass]="{ 'button--disabled': name.invalid }"
+        [disabled]="name.invalid"
+        class="task-editor__create-button button desktop"
+    >Create
+    </button>
+</form>
