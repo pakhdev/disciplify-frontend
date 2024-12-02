@@ -18,14 +18,35 @@ export const isFieldOneEqualFieldTwo = (field1: string, field2: string): Validat
     };
 };
 
-export const emailDiffersFromOld = (oldEmail: string | undefined): ValidatorFn => {
+export const isDateAllowed = (allowedDaysField: string, initAtField: string): ValidatorFn => {
     return (formGroup: AbstractControl): ValidationErrors | null => {
-        const oldEmailTrimmed = (oldEmail || '').trim().toLowerCase();
-        const newEmailTrimmed = formGroup.value.trim().toLowerCase();
-
-        if (oldEmailTrimmed === newEmailTrimmed) {
-            return { emailMatchesOld: true };
+        const allowedDays = formGroup.get(allowedDaysField)?.value;
+        const initAt = formGroup.get(initAtField)?.value;
+        const dayOfWeek = getWeekdayFromDateString(initAt);
+        const daysMap: { [key: number]: string } = {
+            0: 'Sun',
+            1: 'Mon',
+            2: 'Tue',
+            3: 'Wed',
+            4: 'Thy',
+            5: 'Fri',
+            6: 'Sat',
+        };
+        if (!dayOfWeek || !allowedDays.includes(daysMap[dayOfWeek])) {
+            formGroup.get('initAt')?.setErrors({ disallowedDaySelected: true });
+            return { disallowedDaySelected: true };
         }
+
+        formGroup.get('initAt')?.setErrors(null);
         return null;
     };
 };
+
+function getWeekdayFromDateString(dateString: string): number | null {
+    const [day, month, year] = dateString.split('/').map(Number);
+    if (!day || !month || !year) return null;
+    const date = new Date(year, month - 1, day);
+    if (isNaN(date.getTime())) return null;
+    return date.getDay();
+}
+

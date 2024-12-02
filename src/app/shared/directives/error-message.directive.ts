@@ -64,6 +64,9 @@ export class ErrorMessageDirective {
         } else if (errors.includes('passwordMatchesOld')) {
             this.htmlElement.nativeElement.innerText = `The new password matches the old one`;
             return;
+        } else if (errors.includes('disallowedDaySelected')) {
+            this.htmlElement.nativeElement.innerText = `Selected date is not allowed`;
+            return;
         }
     }
 

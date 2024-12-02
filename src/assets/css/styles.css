@@ -93,11 +93,12 @@ html, body {
     background-color: white;
     border: 1px solid var(--bright-blue);
     border-top: 0;
+    z-index: 999;
     & a {
         display: block;
         text-align: center;
         cursor: pointer;
-        padding: 5px 0 2px;
+        padding: 5px 5px 2px;
     }
     & a:hover {
         background-color: var(--pale-blue);
@@ -109,8 +110,8 @@ html, body {
     font-size: 10px;
     text-transform: uppercase;
     border: 0;
-    height: 30px;
-    padding: 0 5px;
+    min-height: 30px;
+    padding: 5px;
     display: flex;
     gap: 5px;
     flex-wrap: wrap;
@@ -124,6 +125,7 @@ html, body {
     padding: 0 10px;
     line-height: 22px;
     color: var(--dark-blue);
+    cursor: pointer;
 }
 .input-multi-select__add-button {
     font-size: 10px;
@@ -132,13 +134,26 @@ html, body {
     border-radius: 5px;
     height: 20px;
     padding: 0 10px;
-    line-height: 22px;
+    line-height: 24px;
     color: white;
     background-color: var(--deep-teal);
     cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
 }
+
+.input-multi-select__add-button option {
+    padding: 5px;
+    cursor: pointer;
+    background-color: var(--deep-teal);
+    color: #FFF;
+    height: 20px;
+    line-height: 24px;
+    pointer-events: none
+}
+
 .input-multi-select__add-button--active {
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0 !important;
 }
 .input-option-selector,
 .input-option-selector--multi {
@@ -260,7 +275,8 @@ html, body {
         border-bottom: 0;
         text-align: center;
         color: var(--dark-blue);
-        padding-top: 2px;
+        padding: 2px 3px 0;
+        cursor: pointer;
     }
     & div:hover {
         background-color: var(--light-blue);
@@ -354,6 +370,12 @@ html, body {
     color: var(--dark-blue);
     line-height: 30px;
     padding-top: 2px;
+    max-width: 107px;
+}
+.task-editor__input-error {
+    padding-left: 3px;
+    color: #E68060;
+    font-size: 10px;
 }
 .task-editor__dismiss {
     margin-top: 10px;
