@@ -1,0 +1,115 @@
+<form
+    name="newTaskForm"
+    [formGroup]="newTaskForm"
+    (ngSubmit)="addTask()"
+    class="task-editor__form">
+    <div class="task-editor__two-columns-inverted">
+        <input
+            name="title" formControlName="title" type="text"
+            autocomplete="off" placeholder="Task name"
+            minlength="3" maxlength="100"
+            class="input-text">
+        <button
+            [ngClass]="{ 'button--disabled': newTaskForm.invalid }"
+            [disabled]="newTaskForm.invalid"
+            class="task-editor__create-button button">
+            Create
+        </button>
+    </div>
+    <div class="task-editor__two-columns">
+        <div class="task-editor__input-label">Categories:</div>
+        <div class="task-editor__input-container" style="width: 336px">
+            <select
+                name="categoryIds" formControlName="categoryIds"
+                multiple customSelect="dropdown"
+                placeholder="Select category">
+                @for (category of categories(); track category.id) {
+                    <option [ngValue]="category.id">{{ category.name }}</option>
+                }
+            </select>
+        </div>
+        <div class="task-editor__input-label">Schedule for:</div>
+        <div class="task-editor__input-container">
+            <select name="scheduleFor" formControlName="scheduleFor" customSelect="tab">
+                @for (name of ['Today', 'Tomorrow', 'Date', 'Recurring']; track name) {
+                    <option>{{ name }}</option>
+                }
+            </select>
+        </div>
+        <div class="task-editor__input-label">Task type:</div>
+        <div class="task-editor__input-container">
+            <select name="type" formControlName="type" customSelect="tab">
+                <option value="TO_DO">To do</option>
+                <option value="TO_AVOID">To avoid</option>
+            </select>
+        </div>
+        <div class="task-editor__input-label">Difficulty:</div>
+        <div class="task-editor__input-container">
+            <select name="difficulty" formControlName="difficulty" customSelect="tab">
+                <option value="1">Easy</option>
+                <option value="2">Normal</option>
+                <option value="3">Hard</option>
+                <option value="4">Nightmare</option>
+            </select>
+        </div>
+        <div class="task-editor__input-label">Times per day:</div>
+        <div class="task-editor__input-container">
+            <input
+                name="iterationLimit" formControlName="iterationLimit"
+                type="number" min="1" max="50"
+                class="input-number">
+        </div>
+        <div class="task-editor__input-label">Is optional:</div>
+        <div class="task-editor__input-container">
+            <select name="isOptional" formControlName="isOptional" customSelect="tab">
+                <option>True</option>
+                <option>False</option>
+            </select>
+        </div>
+        @if (['Date', 'Recurring'].includes(this.newTaskForm.get('scheduleFor')?.value ?? '')) {
+            <div class="task-editor__input-label">Assign date</div>
+            <div class="task-editor__input-container" style="position: relative">
+                <input
+                    name="initAt" formControlName="initAt"
+                    type="text" pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$"
+                    use-calendar [allowedDays]="allowedDays" readonly
+                    class="input-text">
+                @if (hasError('initAt')) {
+                    <div errorMessage class="task-editor__input-error" [errors]="getError('initAt')"></div>
+                }
+            </div>
+        }
+        @if ((this.newTaskForm.get('scheduleFor')?.value ?? '') === 'Recurring') {
+            <div class="task-editor__input-label">Repeat every:</div>
+            <div class="task-editor__input-container">
+                <input
+                    name="repeatInterval"
+                    formControlName="repeatInterval"
+                    type="number" min="1" max="365"
+                    class="input-number">
+                <span class="text-after-input">days</span>
+            </div>
+            <div class="task-editor__input-label">Allowed days:</div>
+            <div class="task-editor__input-container">
+                <select
+                    name="allowedDays" formControlName="allowedDays"
+                    multiple required customSelect="tab">
+                    <option value="Mon">Mon</option>
+                    <option value="Tue">Tue</option>
+                    <option value="Wed">Wed</option>
+                    <option value="Thy">Thy</option>
+                    <option value="Fri">Fri</option>
+                    <option value="Sat">Sat</option>
+                    <option value="Sun">Sun</option>
+                </select>
+            </div>
+            <div class="task-editor__input-label">On restricted days:</div>
+            <div class="task-editor__input-container">
+                <select name="restrictedDaysPolicy" formControlName="restrictedDaysPolicy" customSelect="tab">
+                    <option value="AFTER">Next allowed day</option>
+                    <option value="BEFORE">Previous allowed day</option>
+                </select>
+            </div>
+        }
+    </div>
+</form>
